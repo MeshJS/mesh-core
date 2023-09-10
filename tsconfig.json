@@ -19,7 +19,6 @@
         "target": "es2020",
         "outDir": "dist",
         "declaration": true,
-        "noEmit": true,
         "declarationDir": "dist"
     },
     "include": ["src/**/*.ts"],
