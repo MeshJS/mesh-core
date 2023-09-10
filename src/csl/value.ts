@@ -1,19 +1,18 @@
 import csl from '@emurgo/cardano-serialization-lib-nodejs';
 
 export class SidanValue {
-  self: csl.MultiAsset;
+  self: csl.Value;
+  multiAsset: csl.MultiAsset;
 
-  constructor() {
-    this.self = csl.MultiAsset.new();
-  }
+  constructor(coin: string) {
+    this.self = csl.Value.new(csl.BigNum.from_str(coin));
+    this.multiAsset = csl.MultiAsset.new();
+  };
 
-  withLovelace = (lovelace: string) =>
-    csl.Value.new_with_assets(
-      csl.BigNum.from_str(lovelace),
-      this.self
-    );
-
-  return = () => this.self;
+  return = () => { 
+    this.self.set_multiasset(this.multiAsset);
+    return this.self;
+  };
 
   add = (policyId: string, tokenName: string, quantity: string) => {
     const cslAssets = csl.Assets.new();
@@ -21,10 +20,10 @@ export class SidanValue {
       csl.AssetName.new(Buffer.from(tokenName, 'utf-8')),
       csl.BigNum.from_str(quantity)
     );
-    this.self.insert(
+    this.multiAsset.insert(
       csl.ScriptHash.from_hex(policyId),
       cslAssets
     );
-    return this
+    return this;
   }
 }
