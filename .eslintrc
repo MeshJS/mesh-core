@@ -33,5 +33,6 @@
                 "alwaysTryTypes": true
             }
         }
-    }
+    },
+    "ignorePatterns": ["dist/"]
 }
