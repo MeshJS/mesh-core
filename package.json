@@ -1,8 +1,26 @@
 {
     "name": "@sidan-lab/csl",
+    "description": "Cardano Off-chain Code APIs built on cardano-serialization-lib",
     "version": "1.0.0",
     "license": "MIT",
+    "type": "module",
     "main": "dist/index.js",
+    "module": "dist/index.js",
+    "homepage": "https://github.com/sidan-lab/sidan-csl",
+    "author": {
+        "name": "Sidan Lab",
+        "email": "contact@sidan.io"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/sidan-lab/sidan-csl"
+    },
+    "keywords": [
+        "blockchain",
+        "cardano",
+        "plutus",
+        "cardano-serialization-lib"
+    ],
     "scripts": {
         "lint": "eslint '*/**/*.{ts,js}'"
     },
