@@ -467,7 +467,7 @@
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
 
-"@emurgo/cardano-serialization-lib-browser@^11.5.0":
+"@emurgo/cardano-serialization-lib-browser@^11.4.0":
   version "11.5.0"
   resolved "https://registry.yarnpkg.com/@emurgo/cardano-serialization-lib-browser/-/cardano-serialization-lib-browser-11.5.0.tgz#f2d15b538add436e0aa8b67a1d00ca654a680006"
   integrity sha512-qchOJ9NYDUz10tzs5r5QhP9hK0p+ZOlRiBwPdTAxqAYLw/8emYBkQQLaS8T1DF6EkeudyrgS00ym5Trw1fo4iA==
