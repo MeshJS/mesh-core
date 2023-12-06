@@ -1,6 +1,7 @@
 import { csl } from '../csl';
 import { objToHex } from './common';
 import { scriptAddress } from '../type';
+import { getV2ScriptHash } from './scripts';
 
 export const addrBech32ToHex = (bech32: string): string => {
     const hexAddress = csl.Address.from_bech32(bech32).to_hex();
@@ -54,14 +55,6 @@ export const parsePlutusAddressToBech32 = (plutusHex: string, networkId = 0) => 
     return bech32Addr;
 };
 
-export const scriptHashToBech32 = (scriptCbor: string, stakeCredential?: string) => {
-    const scriptPaymentCred = scriptCbor;
-    const addrObj = scriptAddress(scriptPaymentCred, stakeCredential);
-    const addrHex = objToHex(addrObj);
-    const bech32Addr = parsePlutusAddressToBech32(addrHex);
-    return bech32Addr;
-};
-
 export const serializeBech32Address = (
     bech32Addr: string,
 ): { pubKeyHash: string; scriptHash: string; stakeCredential: string } => {
@@ -87,3 +80,18 @@ export const serializeBech32Address = (
     const cslEAScriptHash = cslEnterprizeAddress?.payment_cred().to_scripthash()?.to_hex() || '';
     return { pubKeyHash: '', scriptHash: cslEAScriptHash, stakeCredential: '' };
 };
+
+export const v2ScriptHashToBech32 = (
+    scriptCbor: string,
+    stakeCredential?: string,
+    networkId = 0,
+) => {
+    const scriptPaymentCred = scriptCbor;
+    const addrObj = scriptAddress(scriptPaymentCred, stakeCredential);
+    const addrHex = objToHex(addrObj);
+    const bech32Addr = parsePlutusAddressToBech32(addrHex, networkId);
+    return bech32Addr;
+};
+
+export const v2ScriptToBech32 = (scriptCbor: string, stakeCredential?: string, networkId = 0) =>
+    v2ScriptHashToBech32(getV2ScriptHash(scriptCbor), stakeCredential, networkId);
