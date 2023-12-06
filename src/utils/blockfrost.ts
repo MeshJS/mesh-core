@@ -1,4 +1,4 @@
-import csl from '@emurgo/cardano-serialization-lib-nodejs';
+import { csl } from '../csl';
 import { AddressUTXO, BlockFrostOutput, OutputAmount } from '../type/blockfrost';
 
 export const getOutputLovelace = <T extends { amount?: { unit?: string; quantity?: string }[] }>(
