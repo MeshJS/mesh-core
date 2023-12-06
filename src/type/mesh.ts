@@ -10,15 +10,15 @@ export const mConStr1 = <T extends Data[]>(fields: T): Data => ({
     fields,
 });
 
-export const meshMaybeStakingHash = (stakeCredential: string): Data => {
+export const mMaybeStakingHash = (stakeCredential: string): Data => {
     if (stakeCredential === '') {
         return mConStr1<[]>([]);
     }
     return mConStr0([mConStr0([mConStr0([stakeCredential])])]);
 };
 
-export const meshPubKeyAddress = (bytes: string, stakeCredential?: string): Data =>
-    mConStr0([{ alternative: 0, fields: [bytes] }, meshMaybeStakingHash(stakeCredential || '')]);
+export const mPubKeyAddress = (bytes: string, stakeCredential?: string): Data =>
+    mConStr0([{ alternative: 0, fields: [bytes] }, mMaybeStakingHash(stakeCredential || '')]);
 
-export const meshScriptAddress = (bytes: string, stakeCredential?: string): Data =>
-    mConStr0([{ alternative: 1, fields: [bytes] }, meshMaybeStakingHash(stakeCredential || '')]);
+export const mScriptAddress = (bytes: string, stakeCredential?: string): Data =>
+    mConStr0([{ alternative: 1, fields: [bytes] }, mMaybeStakingHash(stakeCredential || '')]);
