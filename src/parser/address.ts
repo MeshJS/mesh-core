@@ -1,12 +1,6 @@
 import { csl } from '../csl';
-
-export const bytesToHex = (bytes: ArrayBuffer) => Buffer.from(bytes).toString('hex');
-
-export const hexToBytes = (hex: string) => Buffer.from(hex, 'hex');
-
-export const stringToHex = (str: string) => Buffer.from(str, 'utf8').toString('hex');
-
-export const hexToString = (hex: string) => Buffer.from(hex, 'hex').toString('utf8');
+import { objToHex } from './common';
+import { scriptAddress } from '../type';
 
 export const addrBech32ToHex = (bech32: string): string => {
     const hexAddress = csl.Address.from_bech32(bech32).to_hex();
@@ -20,44 +14,6 @@ export const addrBech32ToObj = <T>(bech32: string): T => {
     const cslAddress = csl.Address.from_hex(hexAddress);
     const json = JSON.parse(csl.PlutusData.from_address(cslAddress).to_json(1));
     return json;
-};
-
-export const hexToObj = <T>(hex: string): T => JSON.parse(csl.PlutusData.from_hex(hex).to_json(1));
-
-export const objToHex = <T>(obj: T): string =>
-    csl.PlutusData.from_json(JSON.stringify(obj), 1).to_hex();
-
-export const parseInlineDatum = <T extends { inline_datum?: string }, X>(utxo: T): X => {
-    const datumCbor: string = utxo.inline_datum || '';
-    const parsedDatum = csl.PlutusData.from_hex(datumCbor);
-    const datum: X = JSON.parse(parsedDatum.to_json(1));
-    return datum as X;
-};
-
-export const serializeBech32Address = (
-    bech32Addr: string,
-): { pubKeyHash: string; scriptHash: string; stakeCredential: string } => {
-    const cslAddress: csl.BaseAddress | undefined = csl.BaseAddress.from_address(
-        csl.Address.from_bech32(bech32Addr),
-    );
-    const cslKeyHash = cslAddress?.payment_cred().to_keyhash()?.to_hex() || '';
-    const cslScriptHash = cslAddress?.payment_cred().to_scripthash()?.to_hex() || '';
-    const cslStakeHash = cslAddress?.stake_cred().to_keyhash()?.to_hex() || '';
-    if (cslKeyHash) {
-        return { pubKeyHash: cslKeyHash, scriptHash: '', stakeCredential: cslStakeHash };
-    }
-    if (cslScriptHash) {
-        return { pubKeyHash: '', scriptHash: cslScriptHash, stakeCredential: cslStakeHash };
-    }
-    const cslEnterprizeAddress = csl.EnterpriseAddress.from_address(
-        csl.Address.from_bech32(bech32Addr),
-    );
-    const cslEAKeyHash = cslEnterprizeAddress?.payment_cred().to_keyhash()?.to_hex() || '';
-    if (cslEAKeyHash) {
-        return { pubKeyHash: cslEAKeyHash, scriptHash: '', stakeCredential: '' };
-    }
-    const cslEAScriptHash = cslEnterprizeAddress?.payment_cred().to_scripthash()?.to_hex() || '';
-    return { pubKeyHash: '', scriptHash: cslEAScriptHash, stakeCredential: '' };
 };
 
 export const parsePlutusAddressToBech32 = (plutusHex: string, networkId = 0) => {
@@ -96,4 +52,38 @@ export const parsePlutusAddressToBech32 = (plutusHex: string, networkId = 0) => 
     }
     console.log('Parsed address', bech32Addr);
     return bech32Addr;
+};
+
+export const scriptHashToBech32 = (scriptCbor: string, stakeCredential?: string) => {
+    const scriptPaymentCred = scriptCbor;
+    const addrObj = scriptAddress(scriptPaymentCred, stakeCredential);
+    const addrHex = objToHex(addrObj);
+    const bech32Addr = parsePlutusAddressToBech32(addrHex);
+    return bech32Addr;
+};
+
+export const serializeBech32Address = (
+    bech32Addr: string,
+): { pubKeyHash: string; scriptHash: string; stakeCredential: string } => {
+    const cslAddress: csl.BaseAddress | undefined = csl.BaseAddress.from_address(
+        csl.Address.from_bech32(bech32Addr),
+    );
+    const cslKeyHash = cslAddress?.payment_cred().to_keyhash()?.to_hex() || '';
+    const cslScriptHash = cslAddress?.payment_cred().to_scripthash()?.to_hex() || '';
+    const cslStakeHash = cslAddress?.stake_cred().to_keyhash()?.to_hex() || '';
+    if (cslKeyHash) {
+        return { pubKeyHash: cslKeyHash, scriptHash: '', stakeCredential: cslStakeHash };
+    }
+    if (cslScriptHash) {
+        return { pubKeyHash: '', scriptHash: cslScriptHash, stakeCredential: cslStakeHash };
+    }
+    const cslEnterprizeAddress = csl.EnterpriseAddress.from_address(
+        csl.Address.from_bech32(bech32Addr),
+    );
+    const cslEAKeyHash = cslEnterprizeAddress?.payment_cred().to_keyhash()?.to_hex() || '';
+    if (cslEAKeyHash) {
+        return { pubKeyHash: cslEAKeyHash, scriptHash: '', stakeCredential: '' };
+    }
+    const cslEAScriptHash = cslEnterprizeAddress?.payment_cred().to_scripthash()?.to_hex() || '';
+    return { pubKeyHash: '', scriptHash: cslEAScriptHash, stakeCredential: '' };
 };
