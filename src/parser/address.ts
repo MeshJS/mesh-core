@@ -51,7 +51,6 @@ export const parsePlutusAddressToBech32 = (plutusHex: string, networkId = 0) => 
         const cslEnterpriseAddress = csl.EnterpriseAddress.new(networkId, cslPaymentCredential);
         bech32Addr = cslEnterpriseAddress.to_address().to_bech32();
     }
-    console.log('Parsed address', bech32Addr);
     return bech32Addr;
 };
 
