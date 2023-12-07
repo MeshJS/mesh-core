@@ -81,12 +81,11 @@ export const serializeBech32Address = (
 };
 
 export const v2ScriptHashToBech32 = (
-    scriptCbor: string,
+    scriptHash: string,
     stakeCredential?: string,
     networkId = 0,
 ) => {
-    const scriptPaymentCred = scriptCbor;
-    const addrObj = scriptAddress(scriptPaymentCred, stakeCredential);
+    const addrObj = scriptAddress(scriptHash, stakeCredential);
     const addrHex = objToHex(addrObj);
     const bech32Addr = parsePlutusAddressToBech32(addrHex, networkId);
     return bech32Addr;

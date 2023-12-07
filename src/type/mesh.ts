@@ -1,11 +1,21 @@
 import { Data } from '@meshsdk/core';
 
+export const mConStr = <T extends Data[]>(alternative: number, fields: T): Data => ({
+    alternative,
+    fields,
+});
+
 export const mConStr0 = <T extends Data[]>(fields: T): Data => ({
     alternative: 0,
     fields,
 });
 
 export const mConStr1 = <T extends Data[]>(fields: T): Data => ({
+    alternative: 1,
+    fields,
+});
+
+export const mConStr2 = <T extends Data[]>(fields: T): Data => ({
     alternative: 1,
     fields,
 });
