@@ -16,7 +16,7 @@ export const mConStr1 = <T extends Data[]>(fields: T): Data => ({
 });
 
 export const mConStr2 = <T extends Data[]>(fields: T): Data => ({
-    alternative: 1,
+    alternative: 2,
     fields,
 });
 
