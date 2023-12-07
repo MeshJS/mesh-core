@@ -4,6 +4,7 @@ export type ConStr1<T> = ConStr<1, T>;
 export type ConStr2<T> = ConStr<2, T>;
 export type BuiltinByteString = { bytes: string };
 export type Integer = { int: number };
+export type List<T> = { list: T[] };
 export type ValidatorHash = BuiltinByteString;
 export type PaymentPubKeyHash = BuiltinByteString;
 export type PubKeyHash = PaymentPubKeyHash;

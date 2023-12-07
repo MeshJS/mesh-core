@@ -17,6 +17,7 @@ import {
     TxOutRef,
     CurrencySymbol,
     TokenName,
+    List,
 } from './type';
 
 export const conStr = <N, T>(constructor: N, fields: T): ConStr<N, T> => ({
@@ -28,6 +29,7 @@ export const conStr1 = <T>(fields: T): ConStr1<T> => conStr<1, T>(1, fields);
 export const conStr2 = <T>(fields: T): ConStr2<T> => conStr<2, T>(2, fields);
 export const builtinByteString = (bytes: string): BuiltinByteString => ({ bytes });
 export const integer = (int: number): Integer => ({ int });
+export const list = <T>(pList: T[]): List<T> => ({ list: pList });
 export const currencySymbol = (bytes: string): CurrencySymbol => builtinByteString(bytes);
 export const tokenName = (bytes: string): TokenName => builtinByteString(bytes);
 export const maybeStakingHash = (stakeCredential: string): MaybeStakingHash => {
