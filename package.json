@@ -1,7 +1,7 @@
 {
     "name": "@sidan-lab/sidan-csl",
     "description": "Cardano Off-chain Code APIs built on cardano-serialization-lib",
-    "version": "0.1.13",
+    "version": "0.1.14",
     "license": "MIT",
     "main": "dist/cjs/index.js",
     "module": "dist/mjs/index.js",
