@@ -6,6 +6,7 @@ import {
     ConStr0,
     ConStr1,
     ConStr2,
+    Bool,
     Integer,
     MaybeStakingHash,
     POSIXTime,
@@ -27,6 +28,7 @@ export const conStr = <N, T>(constructor: N, fields: T): ConStr<N, T> => ({
 export const conStr0 = <T>(fields: T): ConStr0<T> => conStr<0, T>(0, fields);
 export const conStr1 = <T>(fields: T): ConStr1<T> => conStr<1, T>(1, fields);
 export const conStr2 = <T>(fields: T): ConStr2<T> => conStr<2, T>(2, fields);
+export const bool = (b: boolean): Bool => (b ? conStr1<[]>([]) : conStr0<[]>([]));
 export const builtinByteString = (bytes: string): BuiltinByteString => ({ bytes });
 export const integer = (int: number): Integer => ({ int });
 export const list = <T>(pList: T[]): List<T> => ({ list: pList });

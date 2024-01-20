@@ -2,6 +2,7 @@ export type ConStr<N, T> = { constructor: N; fields: T };
 export type ConStr0<T> = ConStr<0, T>;
 export type ConStr1<T> = ConStr<1, T>;
 export type ConStr2<T> = ConStr<2, T>;
+export type Bool = ConStr0<[]> | ConStr1<[]>;
 export type BuiltinByteString = { bytes: string };
 export type Integer = { int: number };
 export type List<T> = { list: T[] };
