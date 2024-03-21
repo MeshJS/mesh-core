@@ -1,6 +1,4 @@
 import { csl } from '../../csl';
-import { objToHex } from './common';
-import { scriptAddress } from '../common';
 import { getV2ScriptHash } from './scripts';
 
 export const addrBech32ToHex = (bech32: string): string => {
@@ -57,39 +55,16 @@ export const parsePlutusAddressToBech32 = (plutusHex: string, networkId = 0) => 
 export const serializeBech32Address = (
     bech32Addr: string,
 ): { pubKeyHash: string; scriptHash: string; stakeCredential: string } => {
-    const cslAddress: csl.BaseAddress | undefined = csl.BaseAddress.from_address(
-        csl.Address.from_bech32(bech32Addr),
-    );
-    const cslKeyHash = cslAddress?.payment_cred().to_keyhash()?.to_hex() || '';
-    const cslScriptHash = cslAddress?.payment_cred().to_scripthash()?.to_hex() || '';
-    const cslStakeHash = cslAddress?.stake_cred().to_keyhash()?.to_hex() || '';
-    if (cslKeyHash) {
-        return { pubKeyHash: cslKeyHash, scriptHash: '', stakeCredential: cslStakeHash };
-    }
-    if (cslScriptHash) {
-        return { pubKeyHash: '', scriptHash: cslScriptHash, stakeCredential: cslStakeHash };
-    }
-    const cslEnterprizeAddress = csl.EnterpriseAddress.from_address(
-        csl.Address.from_bech32(bech32Addr),
-    );
-    const cslEAKeyHash = cslEnterprizeAddress?.payment_cred().to_keyhash()?.to_hex() || '';
-    if (cslEAKeyHash) {
-        return { pubKeyHash: cslEAKeyHash, scriptHash: '', stakeCredential: '' };
-    }
-    const cslEAScriptHash = cslEnterprizeAddress?.payment_cred().to_scripthash()?.to_hex() || '';
-    return { pubKeyHash: '', scriptHash: cslEAScriptHash, stakeCredential: '' };
+    const serializedAddress = csl.serialize_bech32_address(bech32Addr);
+    return {
+        pubKeyHash: serializedAddress.get_pub_key_hash(),
+        scriptHash: serializedAddress.get_script_hash(),
+        stakeCredential: serializedAddress.get_script_hash(),
+    };
 };
 
-export const v2ScriptHashToBech32 = (
-    scriptHash: string,
-    stakeCredential?: string,
-    networkId = 0,
-) => {
-    const addrObj = scriptAddress(scriptHash, stakeCredential);
-    const addrHex = objToHex(addrObj);
-    const bech32Addr = parsePlutusAddressToBech32(addrHex, networkId);
-    return bech32Addr;
-};
+export const scriptHashToBech32 = (scriptHash: string, stakeCredential?: string, networkId = 0) =>
+    csl.script_to_address(networkId, scriptHash, stakeCredential);
 
 export const v2ScriptToBech32 = (scriptCbor: string, stakeCredential?: string, networkId = 0) =>
-    v2ScriptHashToBech32(getV2ScriptHash(scriptCbor), stakeCredential, networkId);
+    scriptHashToBech32(getV2ScriptHash(scriptCbor), stakeCredential, networkId);

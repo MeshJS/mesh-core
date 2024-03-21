@@ -33,6 +33,11 @@ jobs:
                   node-version: 18
                   registry-url: https://registry.npmjs.org/
             - run: yarn ci
-            - run: npm publish --access public
+            - run: |
+                  if [[ "${{ github.event.head_commit.message }}" =~ ^(docs:|chore:|rust:) ]]; then
+                      echo "Skipping npm publish due to commit message."
+                  else
+                      npm publish --access public
+                  fi
               env:
                   NODE_AUTH_TOKEN: ${{secrets.npm_token}}
