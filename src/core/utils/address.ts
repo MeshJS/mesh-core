@@ -1,6 +1,6 @@
-import { csl } from '../csl';
+import { csl } from '../../csl';
 import { objToHex } from './common';
-import { scriptAddress } from '../type';
+import { scriptAddress } from '../common';
 import { getV2ScriptHash } from './scripts';
 
 export const addrBech32ToHex = (bech32: string): string => {

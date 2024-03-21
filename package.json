@@ -33,15 +33,16 @@
         "build": "rm -fr dist/* && tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
         "ci": "yarn && yarn lint && yarn build",
         "lint": "eslint '*/**/*.ts'",
-        "prepare": "husky install"
+        "prepare": "husky install",
+        "test": "jest"
     },
     "browser": {
-        "@emurgo/cardano-serialization-lib-nodejs": "@emurgo/cardano-serialization-lib-browser"
+        "@sidan-lab/sidan-csl-rs-nodejs": "@sidan-lab/sidan-csl-rs-browser"
     },
     "dependencies": {
-        "@emurgo/cardano-serialization-lib-browser": "^11.4.0",
-        "@emurgo/cardano-serialization-lib-nodejs": "^11.4.0",
         "@meshsdk/core": "^1.5.10",
+        "@sidan-lab/sidan-csl-rs-browser": "^0.2.6-beta1",
+        "@sidan-lab/sidan-csl-rs-nodejs": "^0.2.6-beta1",
         "@types/node": "^18.16.3",
         "blakejs": "^1.2.1"
     },
@@ -59,9 +60,10 @@
         "eslint-plugin-import": "^2.27.5",
         "eslint-plugin-prettier": "^4.2.1",
         "husky": "^8.0.3",
-        "jest": "^29.5.0",
+        "jest": "^29.7.0",
         "prettier": "^2.8.8",
-        "ts-jest": "^29.1.0",
+        "ts-jest": "^29.1.2",
+        "ts-node": "^10.9.2",
         "typescript": "^5.0.4"
     },
     "lint-staged": {

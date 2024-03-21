@@ -1,4 +1,4 @@
-import { csl } from '../csl';
+import { csl } from '../../csl';
 
 export const bytesToHex = (bytes: ArrayBuffer) => Buffer.from(bytes).toString('hex');
 

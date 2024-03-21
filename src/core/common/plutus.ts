@@ -19,7 +19,7 @@ import {
     CurrencySymbol,
     TokenName,
     List,
-} from './type';
+} from '../type/plutus';
 
 export const conStr = <N, T>(constructor: N, fields: T): ConStr<N, T> => ({
     constructor,

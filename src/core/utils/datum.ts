@@ -1,4 +1,4 @@
-import { csl } from '../csl';
+import { csl } from '../../csl';
 
 export const parseInlineDatum = <T extends { inline_datum?: string }, X>(utxo: T): X => {
     const datumCbor: string = utxo.inline_datum || '';

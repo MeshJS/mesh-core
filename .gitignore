@@ -5,4 +5,3 @@ dist
 # dotenv
 .env*
 !.env.example
-/test

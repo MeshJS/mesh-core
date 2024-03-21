@@ -1,5 +1,5 @@
 import { csl } from '../csl';
-import { AddressUTXO, BlockFrostOutput, OutputAmount } from '../type/blockfrost';
+import { AddressUTXO, BlockFrostOutput, OutputAmount } from './types';
 
 export const getOutputLovelace = <T extends { amount?: { unit?: string; quantity?: string }[] }>(
     output: T,

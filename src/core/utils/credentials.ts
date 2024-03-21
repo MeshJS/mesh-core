@@ -1,4 +1,4 @@
-import { csl } from '../csl';
+import { csl } from '../../csl';
 
 export const skeyToPubKeyHash = (skeyHex: string): string => {
     const isHexUnclean = skeyHex.slice(0, 4) === '5820' && skeyHex.length === 68;

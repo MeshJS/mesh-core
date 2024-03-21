@@ -1,4 +1,3 @@
 export * from './csl';
-export * from './type';
+export * from './core';
 export * from './utils';
-export * from './parser';
