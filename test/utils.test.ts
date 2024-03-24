@@ -1,4 +1,4 @@
-import { calculateTxHash } from '../src';
+import { calculateTxHash } from '../dist/cjs';
 
 describe('Transaction', () => {
     test('calculateTxHash', () => {
