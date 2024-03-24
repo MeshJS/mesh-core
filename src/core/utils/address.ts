@@ -59,7 +59,7 @@ export const serializeBech32Address = (
     return {
         pubKeyHash: serializedAddress.get_pub_key_hash(),
         scriptHash: serializedAddress.get_script_hash(),
-        stakeCredential: serializedAddress.get_script_hash(),
+        stakeCredential: serializedAddress.get_stake_key_hash(),
     };
 };
 

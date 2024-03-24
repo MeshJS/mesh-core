@@ -1,7 +1,7 @@
 {
-    "name": "@sidan-lab/sidan-csl",
+    "name": "@meshsdk/mesh-csl",
     "description": "Cardano Off-chain Code APIs built on cardano-serialization-lib",
-    "version": "0.2.0-beta6",
+    "version": "0.0.1-beta.1",
     "license": "MIT",
     "main": "dist/cjs/index.js",
     "module": "dist/mjs/index.js",
@@ -11,14 +11,14 @@
             "require": "./dist/cjs/index.js"
         }
     },
-    "homepage": "https://github.com/sidan-lab/sidan-csl",
+    "homepage": "https://github.com/MeshJS/mesh-csl",
     "author": {
-        "name": "Sidan Lab",
+        "name": "SIDAN Lab",
         "email": "contact@sidan.io"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/sidan-lab/sidan-csl.git"
+        "url": "https://github.com/MeshJS/mesh-csl.git"
     },
     "files": [
         "dist"
@@ -41,8 +41,8 @@
     },
     "dependencies": {
         "@meshsdk/core": "^1.5.10",
-        "@sidan-lab/sidan-csl-rs-browser": "^0.2.6-beta1",
-        "@sidan-lab/sidan-csl-rs-nodejs": "^0.2.6-beta1",
+        "@sidan-lab/sidan-csl-rs-browser": "^0.2.6-beta3",
+        "@sidan-lab/sidan-csl-rs-nodejs": "^0.2.6-beta3",
         "@types/node": "^18.16.3",
         "blakejs": "^1.2.1"
     },
