@@ -1,3 +1,15 @@
+export type PreambleType = {
+    title: string;
+    description: string;
+    version: string;
+    plutusVersion: string;
+    compiler: {
+        name: string;
+        version: 'v1' | 'v2' | 'v3';
+    };
+    license: string;
+};
+
 export type BPValidator<D, R, P> = {
     title: string;
     datum: {
