@@ -4,10 +4,11 @@
 name: Node.js Package
 
 on:
-    release:
-        types: [created]
-    push:
+    pull_request:
+        types:
+            - closed
         branches:
+            - main
             - workflow/test-line-compare-deployment
 
 jobs:
@@ -20,8 +21,45 @@ jobs:
                   node-version: 18
             - run: yarn ci
 
+    check-version:
+        runs-on: ubuntu-latest
+        if: github.event.pull_request.merged == true
+        outputs:
+            version-updated: ${{ steps.compare-versions.outputs.version-updated }}
+        steps:
+          - name: Checkout main branch at commit before merge
+            uses: actions/checkout@v3
+            with:
+                ref: ${{ github.event.pull_request.base.sha }}
+    
+          - name: Get package version from main branch before merge
+            id: pre-merge-version
+            run: |
+                PRE_MERGE_VERSION=$(node -p "require('./package.json').version")
+                echo "::set-output name=pre_merge_version::$PRE_MERGE_VERSION"
+    
+          - name: Checkout main branch at commit after merge
+            uses: actions/checkout@v3
+            with:
+                ref: 'main'
+    
+          - name: Get package version from main branch after merge
+            id: post-merge-version
+            run: |
+                POST_MERGE_VERSION=$(node -p "require('./package.json').version")
+                echo "::set-output name=post_merge_version::$POST_MERGE_VERSION"
+    
+          - name: Compare versions
+            id: compare-versions
+            run: |
+                if [[ "${{ steps.pre-merge-version.outputs.pre_merge_version }}" != "${{ steps.post-merge-version.outputs.post_merge_version }}" ]]; then
+                echo "::set-output name=version-updated::true"
+                else
+                echo "::set-output name=version-updated::false"
+                fi
+            
     publish-npm:
-        needs: build
+        needs: [build, check-version]
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
@@ -30,17 +68,5 @@ jobs:
                   node-version: 18
                   registry-url: https://registry.npmjs.org/
             - run: yarn ci
-            - name: Check if version has changed
-              id: check-version
-              run: |
-                git fetch --depth=2
-                VERSION_CHANGED=$(git diff --name-only HEAD^ HEAD | grep -c 'package.json')
-                echo "::set-output name=version_changed::$VERSION_CHANGED"
-            - run: |
-                if [[ "${{ github.event.head_commit.message }}" =~ ^(docs:|chore:) || "${{ steps.check-version.outputs.version_changed }}" == "0" ]]; then
-                    echo "Skipping npm publish due to commit message or version not changed."
-                else
-                    echo "publishing!"
-                fi
-                env:
-                    NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+            - run: echo "publishing"
+
