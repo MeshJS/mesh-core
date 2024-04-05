@@ -9,7 +9,6 @@ on:
             - closed
         branches:
             - main
-            - workflow/test-line-compare-deployment
 
 jobs:
     build:
@@ -68,5 +67,7 @@ jobs:
                   node-version: 18
                   registry-url: https://registry.npmjs.org/
             - run: yarn ci
-            - run: echo "publishing"
+            - run: npm publish --access public
+              env:
+                  NODE_AUTH_TOKEN: ${{secrets.npm_token}}
 
