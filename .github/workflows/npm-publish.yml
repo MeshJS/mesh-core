@@ -9,6 +9,7 @@ on:
     push:
         branches:
             - main
+            - workflow/test-line-compare-deployment
 
 jobs:
     build:
@@ -40,8 +41,7 @@ jobs:
                 if [[ "${{ github.event.head_commit.message }}" =~ ^(docs:|chore:) || "${{ steps.check-version.outputs.version_changed }}" == "0" ]]; then
                     echo "Skipping npm publish due to commit message or version not changed."
                 else
-                    cd packages/module && npm publish --access public
-                    cd ../react && npm publish --access public
+                    echo "publishing!"
                 fi
                 env:
                     NODE_AUTH_TOKEN: ${{secrets.npm_token}}
