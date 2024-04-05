@@ -35,7 +35,7 @@ jobs:
               id: pre-merge-version
               run: |
                   PRE_MERGE_VERSION=$(node -p "require('./package.json').version")
-                  echo "::set-output name=pre_merge_version::$PRE_MERGE_VERSION"
+                  echo "pre_merge_version=$PRE_MERGE_VERSION" >> "$GITHUB_OUTPUT"
 
             - name: Checkout main branch at commit after merge
               uses: actions/checkout@v4
@@ -46,7 +46,7 @@ jobs:
               id: post-merge-version
               run: |
                   POST_MERGE_VERSION=$(node -p "require('./package.json').version")
-                  echo "::set-output name=post_merge_version::$POST_MERGE_VERSION"
+                  echo "post_merge_version=$POST_MERGE_VERSION" >> "$GITHUB_OUTPUT"
 
             - name: Compare versions
               id: compare-versions
