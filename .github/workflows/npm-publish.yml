@@ -30,11 +30,18 @@ jobs:
                   node-version: 18
                   registry-url: https://registry.npmjs.org/
             - run: yarn ci
+            - name: Check if version has changed
+              id: check-version
+              run: |
+                git fetch --depth=2
+                VERSION_CHANGED=$(git diff --name-only HEAD^ HEAD | grep -c 'package.json')
+                echo "::set-output name=version_changed::$VERSION_CHANGED"
             - run: |
-                  if [[ "${{ github.event.head_commit.message }}" =~ ^(docs:|chore:|rust:) ]]; then
-                      echo "Skipping npm publish due to commit message."
-                  else
-                      npm publish --access public
-                  fi
-              env:
-                  NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+                if [[ "${{ github.event.head_commit.message }}" =~ ^(docs:|chore:) || "${{ steps.check-version.outputs.version_changed }}" == "0" ]]; then
+                    echo "Skipping npm publish due to commit message or version not changed."
+                else
+                    cd packages/module && npm publish --access public
+                    cd ../react && npm publish --access public
+                fi
+                env:
+                    NODE_AUTH_TOKEN: ${{secrets.npm_token}}
