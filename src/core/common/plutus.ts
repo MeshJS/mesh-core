@@ -19,6 +19,7 @@ import {
     CurrencySymbol,
     TokenName,
     List,
+    PlutusData,
 } from '../type/plutus';
 
 export const conStr = <N, T>(constructor: N, fields: T): ConStr<N, T> => ({
@@ -31,7 +32,7 @@ export const conStr2 = <T>(fields: T): ConStr2<T> => conStr<2, T>(2, fields);
 export const bool = (b: boolean): Bool => (b ? conStr1<[]>([]) : conStr0<[]>([]));
 export const builtinByteString = (bytes: string): BuiltinByteString => ({ bytes });
 export const integer = (int: number): Integer => ({ int });
-export const list = <T>(pList: T[]): List<T> => ({ list: pList });
+export const list = (pList: PlutusData[]): List => ({ list: pList });
 export const currencySymbol = (bytes: string): CurrencySymbol => builtinByteString(bytes);
 export const tokenName = (bytes: string): TokenName => builtinByteString(bytes);
 export const maybeStakingHash = (stakeCredential: string): MaybeStakingHash => {
