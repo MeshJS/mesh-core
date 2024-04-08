@@ -1,5 +1,4 @@
-import * as Plutus from './plutus';
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export type PreambleType = {
     title: string;
     description: string;
@@ -36,6 +35,8 @@ export type BPValidator<D, R, P> = {
     hash: string;
 };
 
-export type ByteArray = Plutus.BuiltinByteString;
-export type Int = Plutus.Integer;
-export type Constructor<N, T> = Plutus.ConStr<N, T>;
+export type RawBlueprint = {
+    preamble: PreambleType;
+    validators: BPValidator<string, string, string>[];
+    definitions: any[];
+};
