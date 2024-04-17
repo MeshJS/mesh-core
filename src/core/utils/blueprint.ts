@@ -1,14 +1,13 @@
+/* eslint-disable class-methods-use-this */
+/* eslint-disable no-use-before-define */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable max-classes-per-file */
 
 import { BuiltinByteString, ConStr, Integer } from '../type';
+import * as plutus from '../type';
 
-export class ByteArray {
+export class BPByteArray {
     public bytes: string = '';
-
-    constructor(bytes?: string) {
-        if (bytes) this.bytes = bytes;
-    }
 
     public toObject(): BuiltinByteString {
         return {
@@ -17,12 +16,8 @@ export class ByteArray {
     }
 }
 
-export class Int {
+export class BPInt {
     public int: number = 0;
-
-    constructor(int?: number) {
-        if (int) this.int = int;
-    }
 
     public toObject(): Integer {
         return {
@@ -31,15 +26,24 @@ export class Int {
     }
 }
 
-export class Constructor {
+export class BPList<T extends BlueprintDefinition> {
+    public elements: T;
+
+    constructor(elements: T) {
+        this.elements = elements;
+    }
+
+    public toObject(): { list: T[] } {
+        return {
+            list: [],
+        };
+    }
+}
+
+export class BPConstructor {
     public conStr: number = 0;
 
     public fields: any[] = [];
-
-    constructor(conStr: number, fields: any[]) {
-        if (conStr) this.conStr = conStr;
-        if (fields) this.fields = fields;
-    }
 
     public toObject(): ConStr {
         return {
@@ -49,19 +53,26 @@ export class Constructor {
     }
 }
 
-export type BlueprintDefinition = Constructor | ByteArray | Int;
+export type BlueprintDefinition = BPConstructor | BPList<BlueprintDefinition> | BPByteArray | BPInt;
 
-export const parseBlueprintDefinition = (item: any, args = []): Constructor | ByteArray | Int => {
-    switch (item.dataType) {
-        case 'bytes':
-            return new ByteArray(...args);
-        case 'integer':
-            return new Int(...args);
-        // case 'constructor':
-        //     return Constructor;
-        default:
-            throw new Error(`Unknown data type: ${item.dataType}`);
+export const parseBlueprintDefinition = <T extends BlueprintDefinition>(
+    definitions: Record<string, any>,
+    item: any,
+): BlueprintDefinition => {
+    if (item.dataType === 'bytes') {
+        return new BPByteArray() as T;
     }
+    if (item.dataType === 'integer') {
+        return new BPInt() as T;
+    }
+    if (item.dataType === 'list') {
+        const elementType = item.items.$ref.replace('#/definitions/', '');
+        return new BPList(parseBlueprintDefinition(definitions, definitions[elementType])) as T;
+    }
+    if (item.dataType === 'constructor') {
+        return new BPConstructor() as T;
+    }
+    throw new Error('Unknown data type');
 };
 
 // export class MeshBlueprint {
