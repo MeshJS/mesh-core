@@ -6,3 +6,9 @@ export const parseInlineDatum = <T extends { inline_datum?: string }, X>(utxo: T
     const datum: X = JSON.parse(parsedDatum.to_json(1));
     return datum as X;
 };
+
+export const parseDatumCbor = <T = any>(datumCbor: string): T => {
+    const parsedDatum = csl.PlutusData.from_hex(datumCbor);
+    const datum: T = JSON.parse(parsedDatum.to_json(1));
+    return datum as T;
+};
