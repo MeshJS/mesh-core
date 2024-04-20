@@ -21,8 +21,11 @@ export type ScriptAddress = ConStr0<[ConStr1<[ValidatorHash]>, MaybeStakingHash]
 export type AssetClass = ConStr0<[CurrencySymbol, TokenName]>;
 export type TxOutRef = ConStr0<[ConStr0<[BuiltinByteString]>, Integer]>;
 export type AssocMapItem<K, V> = { k: K; v: V };
+export type DictItem<K, V> = { k: K; v: V };
 export type AssocMap<K, V> = { map: AssocMapItem<K, V>[] };
+export type Dict<K, V> = { map: DictItem<K, V>[] };
 export type Tuple<K, V> = ConStr0<[K, V]>;
+export type Value = AssocMap<CurrencySymbol, AssocMap<TokenName, Integer>>;
 export type PlutusData =
     | BuiltinByteString
     | Integer

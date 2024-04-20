@@ -1,3 +1,4 @@
+import { Asset } from '@meshsdk/core';
 import {
     AssetClass,
     AssocMap,
@@ -20,6 +21,7 @@ import {
     TokenName,
     List,
     PlutusData,
+    Value,
 } from '../type/plutus';
 
 export const conStr = <N, T>(constructor: N, fields: T): ConStr<N, T> => ({
@@ -58,4 +60,40 @@ export const posixTime = (int: number): POSIXTime => ({ int });
 export const assocMap = <K, V>(itemsMap: [K, V][]): AssocMap<K, V> => ({
     map: itemsMap.map(([k, v]) => ({ k, v })),
 });
+export const dict = <K, V>(itemsMap: [K, V][]): AssocMap<K, V> => ({
+    map: itemsMap.map(([k, v]) => ({ k, v })),
+});
 export const tuple = <K, V>(key: K, value: V): Tuple<K, V> => conStr0([key, value]);
+export const value = (assets: Asset[]): Value => {
+    const valueMapToParse: [CurrencySymbol, AssocMap<TokenName, Integer>][] = [];
+    const valueMap: { [key: string]: { [key: string]: number } } = {};
+
+    assets.forEach((asset) => {
+        const sanitizedName = asset.unit.replace('lovelace', '');
+        const policy = sanitizedName.slice(0, 56) || '';
+        const token = sanitizedName.slice(56) || '';
+
+        if (!valueMap[policy]) {
+            valueMap[policy] = {};
+        }
+
+        if (!valueMap[policy][token]) {
+            valueMap[policy][token] = Number(asset.quantity);
+        } else {
+            valueMap[policy][token] += Number(asset.quantity);
+        }
+    });
+
+    Object.keys(valueMap).forEach((policy) => {
+        const policyByte = currencySymbol(policy);
+        const tokens: [TokenName, Integer][] = Object.keys(valueMap[policy]).map((name) => [
+            tokenName(name),
+            integer(valueMap[policy][name]),
+        ]);
+
+        const policyMap = assocMap(tokens);
+        valueMapToParse.push([policyByte, policyMap]);
+    });
+
+    return assocMap(valueMapToParse);
+};
