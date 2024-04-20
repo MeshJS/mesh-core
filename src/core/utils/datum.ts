@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { csl } from '../../csl';
 
 export const parseInlineDatum = <T extends { inline_datum?: string }, X>(utxo: T): X => {
