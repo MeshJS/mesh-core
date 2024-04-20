@@ -1,4 +1,5 @@
 import { csl } from '../../csl';
+import { PubKeyAddress, ScriptAddress } from '../type';
 import { getV2ScriptHash } from './scripts';
 
 export const addrBech32ToHex = (bech32: string): string => {
@@ -15,11 +16,10 @@ export const addrBech32ToObj = <T>(bech32: string): T => {
     return json;
 };
 
-export const parsePlutusAddressToBech32 = (plutusHex: string, networkId = 0) => {
-    const cslPlutusDataAddress = csl.PlutusData.from_hex(plutusHex);
-    const plutusDataAddressObject = JSON.parse(
-        cslPlutusDataAddress.to_json(csl.PlutusDatumSchema.DetailedSchema),
-    );
+export const parsePlutusAddressObjToBech32 = (
+    plutusDataAddressObject: PubKeyAddress | ScriptAddress,
+    networkId = 0,
+) => {
     const plutusDataPaymentKeyObject = plutusDataAddressObject.fields[0];
     const plutusDataStakeKeyObject = plutusDataAddressObject.fields[1];
     const cslPaymentKeyHash = plutusDataPaymentKeyObject.fields[0].bytes;
@@ -32,10 +32,7 @@ export const parsePlutusAddressToBech32 = (plutusHex: string, networkId = 0) => 
     let bech32Addr = '';
 
     // Parsing address according to whether it has a stake key
-    if (
-        plutusDataStakeKeyObject.constructor === 0 &&
-        plutusDataStakeKeyObject.fields.length !== 0
-    ) {
+    if (plutusDataStakeKeyObject.constructor === 0) {
         const cslStakeKeyHash = csl.Ed25519KeyHash.from_hex(
             plutusDataStakeKeyObject.fields[0].fields[0].fields[0].bytes,
         );
@@ -50,6 +47,14 @@ export const parsePlutusAddressToBech32 = (plutusHex: string, networkId = 0) => 
         bech32Addr = cslEnterpriseAddress.to_address().to_bech32();
     }
     return bech32Addr;
+};
+
+export const parsePlutusAddressToBech32 = (plutusHex: string, networkId = 0) => {
+    const cslPlutusDataAddress = csl.PlutusData.from_hex(plutusHex);
+    const plutusDataAddressObject = JSON.parse(
+        cslPlutusDataAddress.to_json(csl.PlutusDatumSchema.DetailedSchema),
+    );
+    return parsePlutusAddressObjToBech32(plutusDataAddressObject, networkId);
 };
 
 export const serializeBech32Address = (
