@@ -32,7 +32,7 @@
     "scripts": {
         "build": "rm -fr dist/* && tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
         "ci": "yarn && yarn lint && yarn build",
-        "lint": "eslint '*/**/*.ts'",
+        "lint": "eslint '*/**/*.ts' && npx lint-staged",
         "test": "jest"
     },
     "browser": {
@@ -55,5 +55,11 @@
         "ts-jest": "^29.1.2",
         "ts-node": "^10.9.2",
         "typescript": "^5.0.4"
+    },
+    "lint-staged": {
+        "**/*.{js,ts,}": [
+            "yarn prettier --write",
+            "yarn eslint --fix"
+        ]
     }
 }
