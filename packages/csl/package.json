@@ -30,36 +30,24 @@
         "cardano-serialization-lib"
     ],
     "scripts": {
-        "build": "rm -fr dist/* && tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
-        "ci": "yarn && yarn lint && yarn build",
-        "lint": "eslint '*/**/*.ts' && npx lint-staged",
-        "test": "jest"
+        "prepare": "cp ../../tsconfig-base.json ./ && cp ../../tsconfig-cjs.json ./ && cp ../../tsconfig.json ./",
+        "build": "rm -fr dist/* && tsc -p ./tsconfig.json && tsc -p ./tsconfig-cjs.json",
+        "ci": "yarn && yarn build"
     },
     "browser": {
         "@sidan-lab/sidan-csl-rs-nodejs": "@sidan-lab/sidan-csl-rs-browser"
     },
     "dependencies": {
-        "@meshsdk/core": "^1.5.10",
+        "@meshsdk/core": "^1.5.16",
         "@sidan-lab/sidan-csl-rs-browser": "^0.3.6",
         "@sidan-lab/sidan-csl-rs-nodejs": "^0.3.6",
-        "@types/node": "^18.16.3",
         "blakejs": "^1.2.1",
         "json-bigint": "^1.0.0"
     },
     "devDependencies": {
-        "@types/jest": "^29.5.1",
+        "@types/node": "^18.16.3",
         "@types/json-bigint": "^1.0.4",
-        "@typescript-eslint/parser": "^5.59.1",
-        "jest": "^29.7.0",
-        "prettier": "^2.8.8",
-        "ts-jest": "^29.1.2",
         "ts-node": "^10.9.2",
         "typescript": "^5.0.4"
-    },
-    "lint-staged": {
-        "**/*.{js,ts,}": [
-            "yarn prettier --write",
-            "yarn eslint --fix"
-        ]
     }
 }

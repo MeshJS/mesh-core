@@ -5,3 +5,8 @@ dist
 # dotenv
 .env*
 !.env.example
+
+# Copy of ts configs
+tsconfig.json
+tsconfig-base.json
+tsconfig-cjs.json
