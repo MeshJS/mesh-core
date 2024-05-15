@@ -8,13 +8,11 @@
   "scripts": {
     "lerna": "lerna",
     "prepare": "husky install",
-    "ci": "yarn && yarn lint && yarn build:csl",
+    "ci": "yarn && yarn build:csl",
     "build": "yarn build:csl",
-    "build:csl": "lerna exec --scope @meshsdk/core-csl -- yarn test",
+    "build:csl": "lerna exec --scope @meshsdk/core-csl -- yarn ci",
     "test": "yarn test:csl",
-    "test:csl": "lerna exec --scope @meshsdk/core-csl -- yarn test",
-    "lint": "yarn lint:csl",
-    "lint:csl": "lerna exec --scope @meshsdk/core-csl -- yarn lint"
+    "test:csl": "lerna exec --scope @meshsdk/core-csl -- yarn test"
   },
   "devDependencies": {
     "@types/jest": "28.1.6",
