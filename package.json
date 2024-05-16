@@ -14,6 +14,9 @@
     "test": "jest",
     "lint": "eslint '*/**/*.ts' && npx lint-staged"
   },
+  "dependencies": {
+    "@meshsdk/core": "^1.6.0-alpha.9"
+  },
   "devDependencies": {
     "@commitlint/cli": "^17.4.3",
     "@commitlint/config-conventional": "^17.4.3",

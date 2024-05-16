@@ -1,4 +1,4 @@
-import { csl } from '../../csl';
+import { csl } from '../deser';
 
 export const poolIdHexToBech32 = (poolIdHash: string) => {
     const cslPoolIdHash = csl.Ed25519KeyHash.from_hex(poolIdHash);

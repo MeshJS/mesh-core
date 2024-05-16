@@ -1,4 +1,4 @@
-import { csl } from '../../csl';
+import { csl } from '../deser';
 
 export const calculateTxHash = (txHex: string) => csl.calculate_tx_hash(txHex);
 

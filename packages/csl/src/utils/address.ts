@@ -1,5 +1,5 @@
-import { csl } from '../../csl';
-import { PubKeyAddress, ScriptAddress } from '../type';
+import { PubKeyAddress, ScriptAddress } from '@meshsdk/core';
+import { csl } from '../deser';
 import { getV2ScriptHash } from './scripts';
 
 export const addrBech32ToHex = (bech32: string): string => {

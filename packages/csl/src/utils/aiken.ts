@@ -1,4 +1,4 @@
-import { csl } from '../../csl';
+import { csl } from '../deser';
 
 export const applyParamsToScript = (rawAikenScriptBlueprint: string, params: string[]): string => {
     const cslParams = csl.JsVecString.new();
