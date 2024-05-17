@@ -1,5 +1,5 @@
 /* eslint-disable import/no-cycle */
-import { LanguageVersion } from '@meshsdk/core';
+import { LanguageVersion } from '@meshsdk/common';
 import { LANGUAGE_VERSIONS } from './constants';
 import { csl } from './csl';
 import { toBytes } from './converter';

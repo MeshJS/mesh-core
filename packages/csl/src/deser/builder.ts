@@ -1,10 +1,8 @@
 /* eslint-disable no-use-before-define */
-import { Action, Data, PlutusScript, Recipient, UTxO } from '@meshsdk/core';
-import {
-    LANGUAGE_VERSIONS,
-    DEFAULT_PROTOCOL_PARAMETERS,
-    DEFAULT_REDEEMER_BUDGET,
-} from './constants';
+import type { Action, Data, PlutusScript, Recipient, UTxO } from '@meshsdk/common';
+import { DEFAULT_PROTOCOL_PARAMETERS, DEFAULT_REDEEMER_BUDGET } from '@meshsdk/common';
+import { LANGUAGE_VERSIONS } from './constants';
+
 import { csl } from './csl';
 import type {
     BaseAddress,
@@ -140,7 +138,7 @@ export const buildPlutusScriptSource = (script: PlutusScript | UTxO): PlutusScri
             return csl.PlutusScriptSource.new_ref_input_with_lang_ver(
                 scriptHash,
                 utxo.input(),
-                LANGUAGE_VERSIONS[plutusScript.version],
+                LANGUAGE_VERSIONS[plutusScript.version as 'V1' | 'V2'],
             );
         }
     }

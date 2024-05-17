@@ -9,13 +9,14 @@
     "lerna": "lerna",
     "prepare": "husky install",
     "ci": "yarn && yarn build:csl",
-    "build": "yarn build:csl",
+    "build": "yarn build:common && yarn build:csl",
     "build:csl": "lerna exec --scope @meshsdk/core-csl -- yarn ci",
+    "build:common": "lerna exec --scope @meshsdk/common -- yarn ci",
     "test": "jest",
     "lint": "eslint '*/**/*.ts' && npx lint-staged"
   },
   "dependencies": {
-    "@meshsdk/core": "^1.6.0-alpha.9"
+    "@meshsdk/common": "^1.0.0-alpha.7"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.4.3",

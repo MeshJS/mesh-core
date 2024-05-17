@@ -5,5 +5,5 @@ It is a Typescript wrapper around [`sidan-csl-rs`](https://github.com/sidan-lab/
 ## Install
 
 ```sh
-yarn add @meshsdk/mesh-csl
+yarn add @meshsdk/core-csl
 ```

@@ -12,7 +12,7 @@ import type {
     PoolParams,
     Relay,
     UTxO,
-} from '@meshsdk/core';
+} from '@meshsdk/common';
 // import { POLICY_ID_LENGTH } from '@meshsdk/core';
 import { csl } from './csl';
 import {
@@ -131,7 +131,7 @@ export const fromNativeScript = (script: csl.NativeScript) => {
     }
 };
 
-export const toNativeScript = (script: NativeScript) => {
+export const toNativeScript = (script: NativeScript): csl.NativeScript => {
     const toNativeScripts = (scripts: NativeScript[]) => {
         const nativeScripts = csl.NativeScripts.new();
 
@@ -220,7 +220,7 @@ export const fromPlutusData = (plutusData: PlutusData) => {
     }
 };
 
-export const toPlutusData = (data: Data) => {
+export const toPlutusData = (data: Data): csl.PlutusData => {
     const toPlutusList = (dataArray: Data[]) => {
         const plutusList = csl.PlutusList.new();
         dataArray.forEach((element) => {
@@ -287,7 +287,7 @@ export const toRedeemer = (action: Action) => {
 
 /* -----------------[ Relay ]----------------- */
 
-export const toRelay = (relay: Relay) => {
+export const toRelay = (relay: Relay): csl.Relay => {
     switch (relay.type) {
         case 'SingleHostAddr': {
             const IPV4 = relay.IPV4

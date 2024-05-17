@@ -1,7 +1,7 @@
 /* eslint-disable default-case */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable radix */
-import {
+import type {
     Asset,
     BuilderData,
     Certificate,
@@ -22,9 +22,9 @@ import {
     UTxO,
     Unit,
     ValidityRange,
-    selectUtxos,
-    DEFAULT_PROTOCOL_PARAMETERS,
-} from '@meshsdk/core';
+    IMeshSerializer,
+} from '@meshsdk/common';
+import { DEFAULT_PROTOCOL_PARAMETERS, selectUtxos } from '@meshsdk/common';
 import JSONbig from 'json-bigint';
 import { signTransaction } from '../utils';
 import {
@@ -37,6 +37,7 @@ import {
     toValue,
     csl,
     LANGUAGE_VERSIONS,
+    Relay,
 } from '../deser';
 
 export const emptyTxBuilderBody = (): MeshTxBuilderBody => ({
@@ -54,13 +55,6 @@ export const emptyTxBuilderBody = (): MeshTxBuilderBody => ({
     certificates: [],
     signingKey: [],
 });
-
-export interface IMeshSerializer {
-    serializeTxBody(txBody: MeshTxBuilderBody, protocolParams: Protocol): string;
-    addSigningKeys(txHex: string, signingKeys: string[]): string;
-}
-
-// export class MeshSerializer {}
 
 export class CSLSerializer implements IMeshSerializer {
     txBuilder: TransactionBuilder;
@@ -520,7 +514,7 @@ export class CSLSerializer implements IMeshSerializer {
         const marginFraction = this.decimalToFraction(poolParams.margin);
         const relays = csl.Relays.new();
         poolParams.relays.forEach((relay) => {
-            relays.add(toRelay(relay));
+            relays.add(toRelay(relay) as Relay);
         });
         const rewardAddress = csl.RewardAddress.from_address(
             csl.Address.from_bech32(poolParams.rewardAddress),

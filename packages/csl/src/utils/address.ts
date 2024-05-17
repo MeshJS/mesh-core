@@ -1,4 +1,4 @@
-import { PubKeyAddress, ScriptAddress } from '@meshsdk/core';
+import { PubKeyAddress, ScriptAddress } from '@meshsdk/common';
 import { csl } from '../deser';
 import { getV2ScriptHash } from './scripts';
 
