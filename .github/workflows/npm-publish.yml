@@ -34,8 +34,10 @@ jobs:
             - name: Get package version from main branch before merge
               id: pre-merge-version
               run: |
-                  PRE_MERGE_VERSION=$(node -p "require('./package.json').version")
-                  echo "pre_merge_version=$PRE_MERGE_VERSION" >> "$GITHUB_OUTPUT"
+                  CSL_PRE_MERGE_VERSION=$(node -p "require('./packages/csl/package.json').version")
+                  COMMON_PRE_MERGE_VERSION=$(node -p "require('./packages/common/package.json').version")
+                  echo "csl_pre_merge_version=$CSL_PRE_MERGE_VERSION" >> "$GITHUB_OUTPUT"
+                  echo "common_pre_merge_version=$COMMON_PRE_MERGE_VERSION" >> "$GITHUB_OUTPUT"
 
             - name: Checkout main branch at commit after merge
               uses: actions/checkout@v4
@@ -45,21 +47,28 @@ jobs:
             - name: Get package version from main branch after merge
               id: post-merge-version
               run: |
-                  POST_MERGE_VERSION=$(node -p "require('./package.json').version")
-                  echo "post_merge_version=$POST_MERGE_VERSION" >> "$GITHUB_OUTPUT"
+                  CSL_POST_MERGE_VERSION=$(node -p "require('./packages/csl/package.json').version")
+                  COMMON_POST_MERGE_VERSION=$(node -p "require('./packages/common/package.json').version")
+                  echo "csl_post_merge_version=$CSL_POST_MERGE_VERSION" >> "$GITHUB_OUTPUT"
+                  echo "common_post_merge_version=$COMMON_POST_MERGE_VERSION" >> "$GITHUB_OUTPUT"
 
             - name: Compare versions
               id: compare-versions
               run: |
-                  if [[ "${{ steps.pre-merge-version.outputs.pre_merge_version }}" != "${{ steps.post-merge-version.outputs.post_merge_version }}" ]]; then
-                      echo "version-updated=true" >> "$GITHUB_OUTPUT"
+                  if [[ "${{ steps.pre-merge-version.outputs.csl_pre_merge_version }}" != "${{ steps.post-merge-version.outputs.csl_post_merge_version }}" ]]; then
+                      echo "csl-version-updated=true" >> "$GITHUB_OUTPUT"
                   else
-                      echo "version-updated=false" >> "$GITHUB_OUTPUT"
+                      echo "csl-version-updated=false" >> "$GITHUB_OUTPUT"
+                  fi
+                  if [[ "${{ steps.pre-merge-version.outputs.common_pre_merge_version }}" != "${{ steps.post-merge-version.outputs.common_post_merge_version }}" ]]; then
+                      echo "common-version-updated=true" >> "$GITHUB_OUTPUT"
+                  else
+                      echo "common-version-updated=false" >> "$GITHUB_OUTPUT"
                   fi
 
-    publish-npm:
+    publish-common:
         needs: [build, check-version]
-        if: needs.check-version.outputs.version-updated == 'true'
+        if: needs.check-version.outputs.common-version-updated == 'true'
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
@@ -68,6 +77,21 @@ jobs:
                   node-version: 20
                   registry-url: https://registry.npmjs.org/
             - run: yarn ci
-            - run: npm publish --access public
+            - run: cd packages/common && npm publish --access public
+              env:
+                  NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+
+    publish-csl:
+        needs: [build, check-version]
+        if: needs.check-version.outputs.csl-version-updated == 'true'
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  registry-url: https://registry.npmjs.org/
+            - run: yarn ci
+            - run: cd packages/csl && npm publish --access public
               env:
                   NODE_AUTH_TOKEN: ${{secrets.npm_token}}

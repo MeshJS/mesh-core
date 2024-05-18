@@ -1,0 +1,47 @@
+{
+  "name": "@meshsdk/core-csdk",
+  "description": "Cardano Off-chain Code APIs built on cardano-sdk-js",
+  "version": "1.0.0-alpha.1",
+  "license": "Apache-2.0",
+  "main": "dist/cjs/index.js",
+  "module": "dist/mjs/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/mjs/index.js",
+      "require": "./dist/cjs/index.js"
+    }
+  },
+  "homepage": "https://github.com/MeshJS/mesh-core",
+  "author": {
+    "name": "SIDAN Lab",
+    "email": "contact@sidan.io"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MeshJS/mesh-core.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "blockchain",
+    "cardano",
+    "plutus",
+    "cardano-sdk-js"
+  ],
+  "scripts": {
+    "prepare": "cp ../../tsconfig-base.json ./ && cp ../../tsconfig-cjs.json ./ && cp ../../tsconfig.json ./",
+    "build": "rm -fr dist/* && tsc -p ./tsconfig.json && tsc -p ./tsconfig-cjs.json",
+    "ci": "yarn && yarn build"
+  },
+  "dependencies": {
+    "blakejs": "^1.2.1",
+    "json-bigint": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/json-bigint": "^1.0.4",
+    "@types/node": "^18.16.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.0.4"
+  }
+}
