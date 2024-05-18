@@ -30,7 +30,7 @@
         "cardano-serialization-lib"
     ],
     "scripts": {
-        "prepare": "cp ../tsconfig-base.json ./ && cp ../tsconfig-cjs.json ./ && cp ../tsconfig.json ./",
+        "prepare": "cp ../../tsconfig-base.json ./ && cp ../../tsconfig-cjs.json ./ && cp ../../tsconfig.json ./",
         "build": "rm -fr dist/* && tsc -p ./tsconfig.json && tsc -p ./tsconfig-cjs.json",
         "ci": "yarn && yarn build"
     },

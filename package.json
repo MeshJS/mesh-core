@@ -8,9 +8,10 @@
   "scripts": {
     "lerna": "lerna",
     "prepare": "husky install",
-    "ci": "yarn && yarn build:csl",
-    "build": "yarn build:common && yarn build:csl",
+    "ci": "yarn && yarn build",
+    "build": "yarn build:common && yarn build:csl && yarn build:csdk",
     "build:csl": "lerna exec --scope @meshsdk/core-csl -- yarn ci",
+    "build:csdk": "lerna exec --scope @meshsdk/core-csdk -- yarn ci",
     "build:common": "lerna exec --scope @meshsdk/common -- yarn ci",
     "test": "jest",
     "lint": "eslint '*/**/*.ts' && npx lint-staged"
