@@ -3,7 +3,7 @@ import { csl, toPlutusData } from '../deser';
 
 export const applyParamsToScript = (
     rawAikenScriptBlueprint: string,
-    params: Data[],
+    params: object[] | Data[],
     type: 'Mesh' | 'JSON' | 'CBOR' = 'Mesh',
 ): string => {
     const cslParams = csl.JsVecString.new();
@@ -23,7 +23,7 @@ export const applyParamsToScript = (
 
         case 'Mesh':
             params.forEach((param) => {
-                const paramCbor = toPlutusData(param);
+                const paramCbor = toPlutusData(param as Data);
                 cslParams.add(paramCbor.to_hex());
             });
             break;
