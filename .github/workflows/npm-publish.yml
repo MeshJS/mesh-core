@@ -24,7 +24,8 @@ jobs:
         runs-on: ubuntu-latest
         if: github.event.pull_request.merged == true
         outputs:
-            version-updated: ${{ steps.compare-versions.outputs.version-updated }}
+            common-version-updated: ${{ steps.compare-versions.outputs.common-version-updated }}
+            csl-version-updated: ${{ steps.compare-versions.outputs.csl-version-updated }}
         steps:
             - name: Checkout main branch at commit before merge
               uses: actions/checkout@v4
