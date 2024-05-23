@@ -38,8 +38,8 @@
         "@sidan-lab/sidan-csl-rs-nodejs": "@sidan-lab/sidan-csl-rs-browser"
     },
     "dependencies": {
-        "@sidan-lab/sidan-csl-rs-browser": "^0.5.0-alpha.6",
-        "@sidan-lab/sidan-csl-rs-nodejs": "^0.5.0-alpha.6",
+        "@sidan-lab/sidan-csl-rs-browser": "^0.5.0-alpha.9",
+        "@sidan-lab/sidan-csl-rs-nodejs": "^0.5.0-alpha.9",
         "blakejs": "^1.2.1",
         "json-bigint": "^1.0.0"
     },

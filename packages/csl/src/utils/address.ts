@@ -1,4 +1,4 @@
-// import { PubKeyAddress, ScriptAddress } from '@meshsdk/common';
+import { PubKeyAddress, ScriptAddress } from '@meshsdk/common';
 import { csl } from '../deser';
 import { getV2ScriptHash } from './scripts';
 
@@ -16,46 +16,24 @@ export const addrBech32ToObj = <T>(bech32: string): T => {
     return json;
 };
 
-// export const parsePlutusAddressObjToBech32 = (
-//     plutusDataAddressObject: PubKeyAddress | ScriptAddress,
-//     networkId = 0,
-// ) => {
-//     const plutusDataPaymentKeyObject = plutusDataAddressObject.fields[0];
-//     const plutusDataStakeKeyObject = plutusDataAddressObject.fields[1];
-//     const cslPaymentKeyHash = plutusDataPaymentKeyObject.fields[0].bytes;
+export const parsePlutusAddressObjToBech32 = (
+    plutusDataAddressObject: PubKeyAddress | ScriptAddress,
+    networkId = 0,
+) => {
+    const bech32Addr = csl.parse_plutus_address_obj_to_bech32(
+        JSON.stringify(plutusDataAddressObject),
+        networkId,
+    );
+    return bech32Addr;
+};
 
-//     // Take into account whether the hash is a PubKeyHash or ScriptHash
-//     const cslPaymentCredential =
-//         plutusDataPaymentKeyObject.constructor === 0
-//             ? csl.StakeCredential.from_keyhash(csl.Ed25519KeyHash.from_hex(cslPaymentKeyHash))
-//             : csl.StakeCredential.from_scripthash(csl.ScriptHash.from_hex(cslPaymentKeyHash));
-//     let bech32Addr = '';
-
-//     // Parsing address according to whether it has a stake key
-//     if (plutusDataStakeKeyObject.constructor === 0) {
-//         const cslStakeKeyHash = csl.Ed25519KeyHash.from_hex(
-//             plutusDataStakeKeyObject.fields[0].fields[0].fields[0].bytes,
-//         );
-//         const cslBaseAddress = csl.BaseAddress.new(
-//             networkId,
-//             cslPaymentCredential,
-//             csl.StakeCredential.from_keyhash(cslStakeKeyHash),
-//         );
-//         bech32Addr = cslBaseAddress.to_address().to_bech32();
-//     } else {
-//         const cslEnterpriseAddress = csl.EnterpriseAddress.new(networkId, cslPaymentCredential);
-//         bech32Addr = cslEnterpriseAddress.to_address().to_bech32();
-//     }
-//     return bech32Addr;
-// };
-
-// export const parsePlutusAddressToBech32 = (plutusHex: string, networkId = 0) => {
-//     const cslPlutusDataAddress = csl.PlutusData.from_hex(plutusHex);
-//     const plutusDataAddressObject = JSON.parse(
-//         cslPlutusDataAddress.to_json(csl.PlutusDatumSchema.DetailedSchema),
-//     );
-//     return parsePlutusAddressObjToBech32(plutusDataAddressObject, networkId);
-// };
+export const parsePlutusAddressToBech32 = (plutusHex: string, networkId = 0) => {
+    const cslPlutusDataAddress = csl.PlutusData.from_hex(plutusHex);
+    const plutusDataAddressObject = JSON.parse(
+        cslPlutusDataAddress.to_json(csl.PlutusDatumSchema.DetailedSchema),
+    );
+    return parsePlutusAddressObjToBech32(plutusDataAddressObject, networkId);
+};
 
 export const serializeBech32Address = (
     bech32Addr: string,

@@ -1,8 +1,16 @@
 import { Data } from '@meshsdk/common';
 import { csl, toPlutusData } from '../deser';
 
+/**
+ * Apply parameters to a given script blueprint.
+ *
+ * @param rawScript - The raw script CborHex from blueprint.
+ * @param params - The parameters to apply, in an array.
+ * @param type - The type of the parameters, default to be Mesh's Data type. It could also be in JSON and raw CBOR.
+ * @returns The double-cbor encoded script CborHex with the parameters applied.
+ */
 export const applyParamsToScript = (
-    rawAikenScriptBlueprint: string,
+    rawScript: string,
     params: object[] | Data[],
     type: 'Mesh' | 'JSON' | 'CBOR' = 'Mesh',
 ): string => {
@@ -35,5 +43,5 @@ export const applyParamsToScript = (
             break;
     }
 
-    return csl.apply_params_to_script(rawAikenScriptBlueprint, cslParams, paramType);
+    return csl.apply_params_to_script(rawScript, cslParams, paramType);
 };
