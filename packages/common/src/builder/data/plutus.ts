@@ -38,6 +38,9 @@ export type PlutusData =
     | PubKeyHash
     | POSIXTime
     | TxOutRef
+    | AssocMap<any, any>
+    | Dict<any, any>
+    | Tuple<any, any>
     | Value;
 
 export const conStr = <N, T>(constructor: N, fields: T): ConStr<N, T> => ({
