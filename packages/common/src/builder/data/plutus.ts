@@ -37,7 +37,11 @@ export type PlutusData =
     | PaymentPubKeyHash
     | PubKeyHash
     | POSIXTime
-    | TxOutRef;
+    | TxOutRef
+    | AssocMap<any, any>
+    | Dict<any, any>
+    | Tuple<any, any>
+    | Value;
 
 export const conStr = <N, T>(constructor: N, fields: T): ConStr<N, T> => ({
     constructor,
