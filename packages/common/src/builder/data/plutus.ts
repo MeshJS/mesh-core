@@ -37,7 +37,8 @@ export type PlutusData =
     | PaymentPubKeyHash
     | PubKeyHash
     | POSIXTime
-    | TxOutRef;
+    | TxOutRef
+    | Value;
 
 export const conStr = <N, T>(constructor: N, fields: T): ConStr<N, T> => ({
     constructor,
