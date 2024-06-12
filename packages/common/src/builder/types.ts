@@ -4,18 +4,19 @@ import { Asset, Budget, Data, LanguageVersion, PlutusScript, UTxO, PoolParams } 
 export type MeshTxBuilderBody = {
     inputs: TxIn[];
     outputs: Output[];
-    extraInputs: UTxO[];
-    selectionThreshold: number;
     collaterals: PubKeyTxIn[];
     requiredSignatures: string[];
     referenceInputs: RefTxIn[];
     mints: MintItem[];
     changeAddress: string;
+    changeDatum?: BuilderData;
     metadata: Metadata[];
     validityRange: ValidityRange;
+    signingKey: string[];
+    extraInputs: UTxO[];
+    selectionThreshold: number;
     certificates: Certificate[];
     // withdrawals?: Record<StakeCredential, number>;
-    signingKey: string[];
 };
 
 export type TxIn = PubKeyTxIn | ScriptTxIn;

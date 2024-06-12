@@ -16,7 +16,10 @@ export type PubKeyHash = PaymentPubKeyHash;
 export type POSIXTime = Integer;
 export type CurrencySymbol = BuiltinByteString;
 export type TokenName = BuiltinByteString;
-export type MaybeStakingHash = ConStr1<[]> | ConStr0<[ConStr0<[ConStr0<[BuiltinByteString]>]>]>;
+export type MaybeStakingHash =
+    | ConStr1<[]>
+    | ConStr0<[ConStr0<[ConStr0<[BuiltinByteString]>]>]>
+    | ConStr0<[ConStr0<[ConStr1<[BuiltinByteString]>]>]>;
 export type PubKeyAddress = ConStr0<[ConStr0<[PubKeyHash]>, MaybeStakingHash]>;
 export type ScriptAddress = ConStr0<[ConStr1<[ValidatorHash]>, MaybeStakingHash]>;
 export type AssetClass = ConStr0<[CurrencySymbol, TokenName]>;
@@ -58,9 +61,17 @@ export const integer = (int: number): Integer => ({ int });
 export const list = (pList: PlutusData[]): List => ({ list: pList });
 export const currencySymbol = (bytes: string): CurrencySymbol => builtinByteString(bytes);
 export const tokenName = (bytes: string): TokenName => builtinByteString(bytes);
-export const maybeStakingHash = (stakeCredential: string): MaybeStakingHash => {
+export const maybeStakingHash = (
+    stakeCredential: string,
+    isScriptCredential = false,
+): MaybeStakingHash => {
     if (stakeCredential === '') {
         return conStr1<[]>([]);
+    }
+    if (isScriptCredential) {
+        return conStr0<[ConStr0<[ConStr1<[BuiltinByteString]>]>]>([
+            conStr0([conStr1([builtinByteString(stakeCredential)])]),
+        ]);
     }
     return conStr0<[ConStr0<[ConStr0<[BuiltinByteString]>]>]>([
         conStr0([conStr0([builtinByteString(stakeCredential)])]),
