@@ -77,10 +77,24 @@ export const maybeStakingHash = (
         conStr0([conStr0([builtinByteString(stakeCredential)])]),
     ]);
 };
-export const pubKeyAddress = (bytes: string, stakeCredential?: string): PubKeyAddress =>
-    conStr0([conStr0([builtinByteString(bytes)]), maybeStakingHash(stakeCredential || '')]);
-export const scriptAddress = (bytes: string, stakeCredential?: string): ScriptAddress =>
-    conStr0([conStr1([builtinByteString(bytes)]), maybeStakingHash(stakeCredential || '')]);
+export const pubKeyAddress = (
+    bytes: string,
+    stakeCredential?: string,
+    isScriptCredential = false,
+): PubKeyAddress =>
+    conStr0([
+        conStr0([builtinByteString(bytes)]),
+        maybeStakingHash(stakeCredential || '', isScriptCredential),
+    ]);
+export const scriptAddress = (
+    bytes: string,
+    stakeCredential?: string,
+    isScriptCredential = false,
+): ScriptAddress =>
+    conStr0([
+        conStr1([builtinByteString(bytes)]),
+        maybeStakingHash(stakeCredential || '', isScriptCredential),
+    ]);
 export const assetClass = (policyId: string, assetName: string): AssetClass =>
     conStr0([currencySymbol(policyId), tokenName(assetName)]);
 
