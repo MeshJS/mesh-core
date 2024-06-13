@@ -27,15 +27,15 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@sidan-lab/sidan-csl-rs-browser@^0.5.0-alpha.9":
-  version "0.5.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@sidan-lab/sidan-csl-rs-browser/-/sidan-csl-rs-browser-0.5.0-alpha.9.tgz#d159e14a7090af0e8d229eb39251f924d3dbf862"
-  integrity sha512-SeDziFm3QaakJgakDE1/PKfmHYDwGPkJEC+yX8bWvzNOx/Hql8OC1wUyMKd12VZx3NAE/AoRYtqF4mKknSyc+g==
+"@sidan-lab/sidan-csl-rs-browser@^0.5.4":
+  version "0.5.4"
+  resolved "https://registry.yarnpkg.com/@sidan-lab/sidan-csl-rs-browser/-/sidan-csl-rs-browser-0.5.4.tgz#5444dddd03dad4f3e80a1b71c7b0d8a51df131b3"
+  integrity sha512-Yf2T2CT3vzGGKfxWW0GY6FBRsB/ENaIh3l0fL15R6/xvlcP/SuncNKBsw03UdoIN6Y8SB2qU6NdgpNidWQ/APw==
 
-"@sidan-lab/sidan-csl-rs-nodejs@^0.5.0-alpha.9":
-  version "0.5.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@sidan-lab/sidan-csl-rs-nodejs/-/sidan-csl-rs-nodejs-0.5.0-alpha.9.tgz#37d0994f168c263923ee2489f81c514d2efe8a82"
-  integrity sha512-t/aci5uFgCsedJGiM3zqvTrjr2lEtkVIcf5VkPESo9VE6aL42gUqZ+k7DAw/HbpmGUesMWlEjaSpHofvn7cxsg==
+"@sidan-lab/sidan-csl-rs-nodejs@^0.5.4":
+  version "0.5.4"
+  resolved "https://registry.yarnpkg.com/@sidan-lab/sidan-csl-rs-nodejs/-/sidan-csl-rs-nodejs-0.5.4.tgz#ae06353badb58a897c54acb088a9210e9a3b4cd7"
+  integrity sha512-hD4OzXC7GZZUPqDzProT0Lh/sLz3sqI5Ppz039fDfQ0NhbGYA/aKoZXdjrX48fKbZKfXBtBG7UUY53q1G/F07Q==
 
 "@tsconfig/node10@^1.0.7":
   version "1.0.9"

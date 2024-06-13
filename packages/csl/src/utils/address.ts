@@ -37,17 +37,37 @@ export const parsePlutusAddressToBech32 = (plutusHex: string, networkId = 0) => 
 
 export const serializeBech32Address = (
     bech32Addr: string,
-): { pubKeyHash: string; scriptHash: string; stakeCredential: string } => {
+): {
+    pubKeyHash: string;
+    scriptHash: string;
+    stakeCredential: string;
+    stakeScriptCredential: string;
+} => {
     const serializedAddress = csl.serialize_bech32_address(bech32Addr);
     return {
         pubKeyHash: serializedAddress.get_pub_key_hash(),
         scriptHash: serializedAddress.get_script_hash(),
         stakeCredential: serializedAddress.get_stake_key_hash(),
+        stakeScriptCredential: serializedAddress.get_stake_key_script_hash(),
     };
 };
 
-export const scriptHashToBech32 = (scriptHash: string, stakeCredential?: string, networkId = 0) =>
-    csl.script_to_address(networkId, scriptHash, stakeCredential);
+export const scriptHashToBech32 = (
+    scriptHash: string,
+    stakeCredential?: string,
+    networkId = 0,
+    isScriptStakeCredential = false,
+) => csl.wasm_script_to_address(networkId, scriptHash, stakeCredential, isScriptStakeCredential);
 
-export const v2ScriptToBech32 = (scriptCbor: string, stakeCredential?: string, networkId = 0) =>
-    scriptHashToBech32(getV2ScriptHash(scriptCbor), stakeCredential, networkId);
+export const v2ScriptToBech32 = (
+    scriptCbor: string,
+    stakeCredential?: string,
+    networkId = 0,
+    isScriptStakeCredential = false,
+) =>
+    scriptHashToBech32(
+        getV2ScriptHash(scriptCbor),
+        stakeCredential,
+        networkId,
+        isScriptStakeCredential,
+    );

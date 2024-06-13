@@ -20,6 +20,7 @@ export const emptyTxBuilderBody = (): MeshTxBuilderBody => ({
     validityRange: {},
     certificates: [],
     signingKey: [],
+    withdrawals: [],
 });
 
 export class CSLSerializer implements IMeshSerializer {
