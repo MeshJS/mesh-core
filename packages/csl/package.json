@@ -1,7 +1,7 @@
 {
     "name": "@meshsdk/core-csl",
     "description": "Cardano Off-chain Code APIs built on cardano-serialization-lib",
-    "version": "1.6.0-alpha.9",
+    "version": "1.6.0-alpha.10",
     "license": "Apache-2.0",
     "main": "dist/cjs/index.js",
     "module": "dist/mjs/index.js",
