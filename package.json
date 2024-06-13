@@ -17,7 +17,7 @@
     "lint": "eslint '*/**/*.ts' && npx lint-staged"
   },
   "dependencies": {
-    "@meshsdk/common": "^1.0.0-alpha.7"
+    "@meshsdk/common": "^1.0.0-alpha.12"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.4.3",

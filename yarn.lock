@@ -859,10 +859,10 @@
     yargs "17.7.2"
     yargs-parser "21.1.1"
 
-"@meshsdk/common@^1.0.0-alpha.7":
-  version "1.0.0-alpha.7"
-  resolved "https://registry.yarnpkg.com/@meshsdk/common/-/common-1.0.0-alpha.7.tgz#c655a12846c6d9648a6444844f5c594038707c42"
-  integrity sha512-2Ks7ZA9AjVRCMrIfNYAiTUBNj4NtDZ9t7L2w3rqA+309nduauqe/kzVWauNEW3Ug3edA84KPnFmAIYc4NdN5sw==
+"@meshsdk/common@^1.0.0-alpha.12":
+  version "1.0.0-alpha.12"
+  resolved "https://registry.yarnpkg.com/@meshsdk/common/-/common-1.0.0-alpha.12.tgz#9907deeeccb898e763014f1d756422bdd56c742c"
+  integrity sha512-bAioWoAdAg+PxyJlURH0OJzed2UHoQf6vVZ1bImFylRAvIozIPhvL9BeEnqi7wXjw3dz5eACMMoxLlqUmMMSNA==
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
