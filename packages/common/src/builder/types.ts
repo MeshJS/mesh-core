@@ -7,16 +7,16 @@ export type MeshTxBuilderBody = {
     collaterals: PubKeyTxIn[];
     requiredSignatures: string[];
     referenceInputs: RefTxIn[];
+    withdrawals: Withdrawal[];
     mints: MintItem[];
     changeAddress: string;
     changeDatum?: BuilderData;
     metadata: Metadata[];
     validityRange: ValidityRange;
+    certificates: Certificate[];
     signingKey: string[];
     extraInputs: UTxO[];
     selectionThreshold: number;
-    certificates: Certificate[];
-    // withdrawals?: Record<StakeCredential, number>;
 };
 
 export type TxIn = PubKeyTxIn | ScriptTxIn;
@@ -37,15 +37,7 @@ export type ScriptTxIn = {
 };
 
 export type ScriptTxInParameter = {
-    scriptSource?:
-        | {
-              type: 'Provided';
-              script: PlutusScript;
-          }
-        | {
-              type: 'Inline';
-              txInInfo: ScriptSourceInfo;
-          };
+    scriptSource?: ScriptSource;
     datumSource?:
         | {
               type: 'Provided';
@@ -58,6 +50,16 @@ export type ScriptTxInParameter = {
           };
     redeemer?: Redeemer;
 };
+
+export type ScriptSource =
+    | {
+          type: 'Provided';
+          script: PlutusScript;
+      }
+    | {
+          type: 'Inline';
+          txInInfo: ScriptSourceInfo;
+      };
 
 export type ScriptSourceInfo = {
     txHash: string;
@@ -136,6 +138,16 @@ export type Certificate =
     | { type: 'DelegateStake'; stakeKeyHash: string; poolId: string }
     | { type: 'DeregisterStake'; stakeKeyHash: string }
     | { type: 'RetirePool'; poolId: string; epoch: number };
+
+export type Withdrawal =
+    | { type: 'PubKeyWithdrawal'; address: string; coin: number }
+    | {
+          type: 'PlutusScriptWithdrawal';
+          address: string;
+          coin: number;
+          scriptSource?: ScriptSource;
+          redeemer?: Redeemer;
+      };
 
 // Utilities
 
