@@ -45,3 +45,15 @@ export const applyParamsToScript = (
 
     return csl.apply_params_to_script(rawScript, cslParams, paramType);
 };
+
+/**
+ * Apply Cbor encoding.
+ *
+ * @param rawScript - The raw script CborHex from blueprint.
+ * @returns The double-cbor encoded script CborHex.
+ */
+export const applyCborEncoding = (
+    rawScript: string,
+): string => {
+    return csl.apply_params_to_script(rawScript, csl.JsVecString.new(), csl.BuilderDataType.CBOR)
+};
